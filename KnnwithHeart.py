@@ -85,28 +85,33 @@ model.fit(X, y)
 # ทำนายผล
 # -------------------------------
 if st.button("ทำนายราคา"):
+    # เอาค่าจาก input มาใส่ DataFrame 1 แถว
     input_dict = {
-        "area": A1,
-        "bedrooms": A2,
-        "bathrooms": A3,
-        "stories": A4,
-        "mainroad": 1 if A5 == "yes" else 0,
-        "guestroom": 1 if A6 == "yes" else 0,
-        "basement": 1 if A7 == "yes" else 0,
-        "hotwaterheating": 1 if A8 == "yes" else 0,
-        "airconditioning": 1 if A9 == "yes" else 0,
-        "parking": A10,
-        "prefarea": 1 if A11 == "yes" else 0,
-        "furnishingstatus_furnished": 1 if A12 == "furnished" else 0,
-        "furnishingstatus_semi-furnished": 1 if A12 == "semi-furnished" else 0,
+        "area": [A1],
+        "bedrooms": [A2],
+        "bathrooms": [A3],
+        "stories": [A4],
+        "mainroad": [A5],
+        "guestroom": [A6],
+        "basement": [A7],
+        "hotwaterheating": [A8],
+        "airconditioning": [A9],
+        "parking": [A10],
+        "prefarea": [A11],
+        "furnishingstatus": [A12]
     }
-    x_input = pd.DataFrame([input_dict])
+    x_input = pd.DataFrame(input_dict)
 
-    # ⭐ สำคัญ: ให้ x_input มีคอลัมน์เหมือนกับ X
-    x_input = x_input.reindex(columns=X.columns, fill_value=0)
+    # ใช้ preprocess() แบบเดียวกับตอน train
+    x_input_proc = preprocess(x_input)
 
-    prediction = model.predict(x_input)[0]
+    # ทำให้คอลัมน์ตรงกับ X
+    x_input_proc = x_input_proc.reindex(columns=X.columns, fill_value=0)
+
+    # ทำนายราคา
+    prediction = model.predict(x_input_proc)[0]
     st.success(f"🏡 ราคาบ้านที่คาดการณ์: {prediction:,.2f} บาท")
+
 
 else:
     st.write("กรอกข้อมูลแล้วกดปุ่มเพื่อทำนายราคา")
