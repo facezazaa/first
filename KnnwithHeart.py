@@ -101,6 +101,12 @@ if st.button("ทำนายราคา"):
         "furnishingstatus_semi-furnished": 1 if A12 == "semi-furnished" else 0,
     }
     x_input = pd.DataFrame([input_dict])
-    st.success(f"🏡 ราคาบ้านที่คาดการณ์: {model.predict(x_input)[0]:,.2f} บาท")
+
+    # ⭐ สำคัญ: ให้ x_input มีคอลัมน์เหมือนกับ X
+    x_input = x_input.reindex(columns=X.columns, fill_value=0)
+
+    prediction = model.predict(x_input)[0]
+    st.success(f"🏡 ราคาบ้านที่คาดการณ์: {prediction:,.2f} บาท")
+
 else:
     st.write("กรอกข้อมูลแล้วกดปุ่มเพื่อทำนายราคา")
