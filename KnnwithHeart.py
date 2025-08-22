@@ -11,11 +11,11 @@ col1, col2 = st.columns(2)
 
 with col1:
    st.header("")
-   st.image("./img/heart1.jpg")
+   st.image("./img/1.jpg")
 
 with col2:
    st.header("")
-   st.image("./img/heart2.jpg")
+   st.image("./img/2.jpg")
 
 
 html_7 = """
@@ -88,8 +88,8 @@ if st.button("ทำนายผล"):
    out=Knn_model.predict(x_input)
 
    if out[0] == 1:
-    st.image("./img/heart1.jpg")
+    st.image("./img/1.jpg")
    else:
-    st.image("./img/heart2.jpg")
+    st.image("./img/2.jpg")
 else:
     st.write("ไม่ทำนาย")
