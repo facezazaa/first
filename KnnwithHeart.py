@@ -5,7 +5,7 @@ import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
 
-st.title('การทำนายข้อมูลโรคหัวใจด้วยเทคนิค K-Nearest Neighbor')
+st.title('การทำนายข้อมูลการซื้อขายบ้านด้วยเทคนิค K-Nearest Neighbor')
 #st.image("./img/kairung.jpg")
 col1, col2 = st.columns(2)
 
@@ -20,7 +20,7 @@ with col2:
 
 html_7 = """
 <div style="background-color:#33beff;padding:15px;border-radius:15px 15px 15px 15px;border-style:'solid';border-color:black">
-<center><h4>ข้อมูลโรคหัวใจสำหรับทำนาย</h4></center>
+<center><h4>ข้อมูลการคาดการณ์ราคาที่อยู่อาศัย</h4></center>
 </div>
 """
 st.markdown(html_7, unsafe_allow_html=True)
@@ -28,7 +28,7 @@ st.markdown("")
 st.markdown("")
 
 st.subheader("ข้อมูลส่วนแรก 10 แถว")
-dt = pd.read_csv("./data/Heart3.csv")
+dt = pd.read_csv("./data/Housing.csv")
 st.write(dt.head(10))
 st.subheader("ข้อมูลส่วนสุดท้าย 10 แถว")
 st.write(dt.tail(10))
