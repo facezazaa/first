@@ -1,7 +1,6 @@
 from sklearn.neighbors import KNeighborsClassifier
 import streamlit as st
 import pandas as pd
-import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
 
@@ -60,12 +59,20 @@ if st.checkbox("✅ แสดง Pairplot (ใช้เวลาประมว�
 # -------------------------------
 def preprocess(df):
     df2 = df.copy()
-    # เติมค่า missing
-    df2 = df2.fillna(df2.mean(numeric_only=True))
-    # แปลงข้อมูล categorical เป็นตัวเลข
+
+    # จัดการ categorical ก่อน
     for col in df2.columns:
         if df2[col].dtype == "object":
-            df2[col] = df2[col].astype("category").cat.codes
+            df2[col] = df2[col].astype("category")
+
+    # เติมค่า missing
+    for col in df2.columns:
+        if str(df2[col].dtype) == "category":
+            df2[col] = df2[col].cat.add_categories("Unknown").fillna("Unknown")
+            df2[col] = df2[col].cat.codes
+        else:
+            df2[col] = df2[col].fillna(df2[col].mean())
+
     return df2
 
 dt_proc = preprocess(dt)
@@ -89,6 +96,7 @@ st.write(rand_row)
 
 x_input_proc = preprocess(rand_row)
 x_input_proc = x_input_proc.reindex(columns=X.columns, fill_value=0)
+x_input_proc = x_input_proc.fillna(0)   # กัน NaN ตกค้าง
 
 # -------------------------------
 # ทำนายผล
